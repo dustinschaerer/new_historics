@@ -1,6 +1,7 @@
 class ServicesController < InheritedResources::Base
 
   before_action :authenticate_admin_user!
+  before_action :set_service, only: [:edit, :update, :destroy]
 
    def create
     @service = Service.new(service_params)
@@ -25,6 +26,10 @@ class ServicesController < InheritedResources::Base
   end
 
   private
+
+    def set_service
+      @service = Service.find(params[:id])
+    end
 
     def service_params
       params.require(:service).permit(:title, :description, :link_text, :link_destination, :sort)
